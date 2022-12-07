@@ -1,4 +1,4 @@
-package POM;
+package pom;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -94,7 +94,7 @@ public class InputFormDemoPage extends BasePage {
     }
 
     public void ingresarComentario(String comentario) {
-        senKeys(comentBy, comentario);
+        senKeys(commentBy, comentario);
     }
 
     public void clickSend() {
