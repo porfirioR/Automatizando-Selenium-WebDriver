@@ -7,10 +7,10 @@ import utils.PropertyReader;
 
 import java.util.List;
 
-public class InputFormDemoPage extends BasePage {
-    private By firstNameBy;
-    private By lastNameBy;
-    private By emailBy;
+public class HtmlFormPage extends BasePage {
+    private By userNameBy;
+    private By passwordBy;
+    private By textAreaCommentBy;
     private By phoneBy;
     private By addressBy;
     private By cityBy;
@@ -22,16 +22,16 @@ public class InputFormDemoPage extends BasePage {
     private By btnSend;
     private By alertSmall;
 
-    public InputFormDemoPage(WebDriver webDriver) {
+    public HtmlFormPage(WebDriver webDriver) {
         super(webDriver);
 
         try {
-            if (!getTitle().equals(PropertyReader.getEnvironment("input_form_demo_title")))
+            if (!getTitle().equals(PropertyReader.getEnvironment("html_form_title")))
                 throw new Exception("La pagina no es la esperada.");
 
-            firstNameBy = By.name("first_name");
-            lastNameBy = By.name("last_name");
-            emailBy = By.name("email");
+            userNameBy = By.name("first_name");
+            passwordBy = By.name("last_name");
+            textAreaCommentBy = By.name("email");
             phoneBy = By.name("phone");
             addressBy = By.name("address");
             cityBy = By.name("city");
@@ -49,16 +49,16 @@ public class InputFormDemoPage extends BasePage {
     //endregion
 
     //region [Metodos]
-    public void ingresarNombre(String nombre) {
-        senKeys(firstNameBy, nombre);
+    public void insertUserName(String userName) {
+        senKeys(userNameBy, userName);
     }
 
-    public void ingresarApellido(String apellido) {
-        senKeys(lastNameBy, apellido);
+    public void insertPassword(String password) {
+        senKeys(passwordBy, password);
     }
 
     public void ingresarEmail(String email) {
-        senKeys(emailBy, email);
+        senKeys(textAreaCommentBy, email);
     }
 
     public void ingresarTelefono(String telefono) {

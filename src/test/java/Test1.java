@@ -1,5 +1,5 @@
 import pom.HomePage;
-import pom.InputFormDemoPage;
+import pom.HtmlFormPage;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,10 +9,10 @@ import java.util.List;
 
 public class Test1 {
     private WebDriver webDriver;
-    private InputFormDemoPage inputFormDemoPage;
-    private static  String NOMBRE;
+    private HtmlFormPage htmlFormPage;
+    private static  String USERNAME;
     private static String TITULOPAGINA;
-    private static String APELLIDO;
+    private static String PASSWORD;
     private static String EMAIL;
     private static String TELEFONO;
     private static String DIRECCION;
@@ -26,8 +26,8 @@ public class Test1 {
     @BeforeAll
     static void antesDeTodosLosTest() {
         TITULOPAGINA = "Selenium Easy - Input Form Demo with Validations";
-        NOMBRE = "Leonardo";
-        APELLIDO = "Perez";
+        USERNAME = "Leonardo";
+        PASSWORD = "Perez";
         EMAIL = "lperez@ces.com.uy";
         TELEFONO = "(845)555-1212";
         DIRECCION = "Direccion";
@@ -43,7 +43,7 @@ public class Test1 {
     void beforeEach() {
         webDriver = Utils.configureWebDriver();
         HomePage homePage = new HomePage(webDriver);
-        inputFormDemoPage = homePage.accessInputFormDemo();
+        htmlFormPage = homePage.accessHtmlFormExample();
     }
 
     @AfterEach
@@ -53,29 +53,29 @@ public class Test1 {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        inputFormDemoPage.cerrarSitio();
+        htmlFormPage.cerrarSitio();
     }
 
     @Test
     void camposCompletos() {
-        Assertions.assertEquals(inputFormDemoPage.obtenerTitulo(), TITULOPAGINA, "El titulo no es el esperado.");
+        Assertions.assertEquals(htmlFormPage.obtenerTitulo(), TITULOPAGINA, "El titulo no es el esperado.");
 
-        inputFormDemoPage.ingresarNombre(NOMBRE);
-        inputFormDemoPage.ingresarApellido(APELLIDO);
-        inputFormDemoPage.ingresarEmail(EMAIL);
-        inputFormDemoPage.ingresarTelefono(TELEFONO);
-        inputFormDemoPage.ingresarDireccion(DIRECCION);
-        inputFormDemoPage.ingresarCiudad(CIUDAD);
-        inputFormDemoPage.seleccionarEstado(ESTADO);
-        inputFormDemoPage.ingresarZip(ZIP);
-        inputFormDemoPage.ingresarSitioWeb(SITIOWEB);
-        inputFormDemoPage.tieneHosting(HOSTING);
-        inputFormDemoPage.ingresarComentario(COMENTARIO);
-        inputFormDemoPage.clickSend();
+        htmlFormPage.insertUserName(USERNAME);
+        htmlFormPage.insertPassword(PASSWORD);
+        htmlFormPage.ingresarEmail(EMAIL);
+        htmlFormPage.ingresarTelefono(TELEFONO);
+        htmlFormPage.ingresarDireccion(DIRECCION);
+        htmlFormPage.ingresarCiudad(CIUDAD);
+        htmlFormPage.seleccionarEstado(ESTADO);
+        htmlFormPage.ingresarZip(ZIP);
+        htmlFormPage.ingresarSitioWeb(SITIOWEB);
+        htmlFormPage.tieneHosting(HOSTING);
+        htmlFormPage.ingresarComentario(COMENTARIO);
+        htmlFormPage.clickSend();
 
         //validacion formulario
-        List<WebElement> listaEtiquetasSmall = inputFormDemoPage.obtenerAlertas();
-        boolean invalid = inputFormDemoPage.contieneINVALID(listaEtiquetasSmall);
+        List<WebElement> listaEtiquetasSmall = htmlFormPage.obtenerAlertas();
+        boolean invalid = htmlFormPage.contieneINVALID(listaEtiquetasSmall);
         Assertions.assertFalse(invalid, "Se encuentra una verificacion pendiente.");
     }
 }
