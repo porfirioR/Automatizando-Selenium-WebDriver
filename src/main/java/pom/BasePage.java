@@ -1,7 +1,6 @@
 package pom;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.Select;
 
 public class BasePage {
     protected WebDriver webDriver;
@@ -17,11 +16,10 @@ public class BasePage {
     protected void click(By element) {
         webDriver.findElement(element).click();
     }
+
     protected void senKeys(By element, String text) {
+        webDriver.findElement(element).clear();
         webDriver.findElement(element).sendKeys(text);
-    }
-    protected void selectByVisibleText(By element, String text) {
-        new Select(webDriver.findElement(element)).selectByVisibleText(text);
     }
 
     protected String getTitle() {

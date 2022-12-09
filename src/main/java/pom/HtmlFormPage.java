@@ -3,125 +3,124 @@ package pom;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import utils.PropertyReader;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class HtmlFormPage extends BasePage {
     private By userNameBy;
     private By passwordBy;
     private By textAreaCommentBy;
-    private By phoneBy;
-    private By addressBy;
-    private By cityBy;
-    private By stateBy;
-    private By zipBy;
-    private By webSiteBy;
-    private By hostingBy;
-    private By commentBy;
-    private By btnSend;
-    private By alertSmall;
+    private By multipleSelectBy;
+    private By dropdownBy;
+    private By checkboxItemBy;
+    private By btnSubmit;
+    private By formResultsBy;
 
     public HtmlFormPage(WebDriver webDriver) {
         super(webDriver);
 
         try {
-            if (!getTitle().equals(PropertyReader.getEnvironment("html_form_title")))
+            if (!getTitle().equals(PropertyReader.getEnvironment("html_form_title"))) {
                 throw new Exception("La pagina no es la esperada.");
+            }
 
-            userNameBy = By.name("first_name");
-            passwordBy = By.name("last_name");
-            textAreaCommentBy = By.name("email");
-            phoneBy = By.name("phone");
-            addressBy = By.name("address");
-            cityBy = By.name("city");
-            stateBy = By.name("state");
-            zipBy = By.name("zip");
-            webSiteBy = By.name("website");
-            hostingBy = By.name("hosting");
-            commentBy = By.name("comment");
-            btnSend = By.cssSelector(".btn");
-            alertSmall = By.tagName("small");
+            userNameBy = By.name("username");
+            passwordBy = By.name("password");
+            textAreaCommentBy = By.name("comments");
+            checkboxItemBy = By.name("checkboxes[]");
+            multipleSelectBy = By.name("multipleselect[]");
+            dropdownBy = By.name("dropdown");
+            btnSubmit = By.xpath("//*[@id=\"HTMLFormElements\"]/table/tbody/tr[9]/td/input[2]");
+            formResultsBy = By.className("form-results");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     //endregion
 
-    //region [Metodos]
-    public void insertUserName(String userName) {
+    public void InsertUserName(String userName) {
         senKeys(userNameBy, userName);
     }
 
-    public void insertPassword(String password) {
+    public void InsertPassword(String password) {
         senKeys(passwordBy, password);
     }
 
-    public void ingresarEmail(String email) {
-        senKeys(textAreaCommentBy, email);
+    public void InsertComment(String comment) {
+        senKeys(textAreaCommentBy, comment);
     }
 
-    public void ingresarTelefono(String telefono) {
-        senKeys(phoneBy, telefono);
+    public void ClickCheckButton(String option) {
+        for (WebElement checkBox : webDriver.findElements(checkboxItemBy)) {
+            String checkBoxOption = checkBox.getAttribute("value");
+            if (checkBoxOption.equals(option)) {
+                checkBox.click();
+            }
+        }
     }
 
-    public void ingresarDireccion(String direccion) {
-        senKeys(addressBy, direccion);
+    public void ClickMultiselectByOption(String option) {
+        WebElement selectTag = webDriver.findElement(multipleSelectBy);
+        Select select = new Select(selectTag);
+        for (WebElement selectOption : select.getOptions()) {
+            if (selectOption.getAttribute("value").contains(option)) {
+                selectOption.click();
+            }
+        }
     }
 
-    public void ingresarCiudad(String ciudad) {
-
-        senKeys(cityBy, ciudad);
+    public void SelectDropdownByOption(String option) {
+        WebElement dropdownTag = webDriver.findElement(dropdownBy);
+        Select select = new Select(dropdownTag);
+        for (WebElement selectOption : select.getOptions()) {
+            if (selectOption.getAttribute("value").contains(option)) {
+                selectOption.click();
+            }
+        }
     }
 
-    public void seleccionarEstado(String estado) {
-
-        selectByVisibleText(stateBy, estado);
+    public void ClickSubmit() {
+        click(btnSubmit);
     }
 
-    public void ingresarZip(String zip) {
-        senKeys(zipBy, zip);
+    public WebElement GetFormResults() {
+        String title = webDriver.getTitle();
+        WebElement webElement = webDriver.findElement(formResultsBy);
+        return webDriver.findElement(formResultsBy);
     }
 
-    public void ingresarSitioWeb(String sitioWeb) {
-        senKeys(webSiteBy, sitioWeb);
-    }
-
-    public void tieneHosting(String opcion) {
-        for (WebElement element : webDriver.findElements(hostingBy))
-            if (element.getText().contains(opcion))
-                element.click();
-    }
-
-    public void ingresarComentario(String comentario) {
-        senKeys(commentBy, comentario);
-    }
-
-    public void clickSend() {
-        click(btnSend);
-    }
-
-    public List<WebElement> obtenerAlertas() {
-        return webDriver.findElements(alertSmall);
-    }
-
-    public boolean contieneINVALID(List<WebElement> listaEtiquetasSmall) {
+    public boolean CheckInvalid(WebElement formResults, String[] inputValues) {
         boolean invalid = false;
-        String atributo = "data-bv-result";
+        List<String> codes = new ArrayList<String>();
+        codes.add("_valueusername");
+        codes.add("_valuepassword");
+        codes.add("_valuecomments");
+        codes.add("_valuecheckboxes0");
+        codes.add("_valuemultipleselect0");
+        codes.add("_valuedropdown");
         String atributoValor = "INVALID";
 
-        for (WebElement item : listaEtiquetasSmall)
-            if (item.getAttribute(atributo).equals(atributoValor))
+        for (String code : codes) {
+            WebElement webElement = formResults.findElement(By.id(code));
+            String value = webElement.getText();
+            if (!Arrays.stream(inputValues).anyMatch(value::equals)) {
                 invalid = true;
+            }
+        }
+
 
         return invalid;
     }
 
-    public String obtenerTitulo(){
+    public String GetCurrentPageTitle() {
         return getTitle();
     }
 
-    public void cerrarSitio(){
+    public void ClosePage() {
         quit();
     }
 
