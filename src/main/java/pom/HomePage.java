@@ -11,10 +11,10 @@ public class HomePage extends BasePage {
     public HomePage(WebDriver webDriver) {
         super(webDriver);
         webDriver.get(homePage);
-        click(htmlFormExample);
+        Click(htmlFormExample);
     }
 
-    public HtmlFormPage accessHtmlFormExample() {
+    public HtmlFormPage AccessHtmlFormExample() {
         return new HtmlFormPage(webDriver);
     }
 }

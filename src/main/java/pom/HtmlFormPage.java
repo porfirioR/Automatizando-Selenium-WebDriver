@@ -24,7 +24,7 @@ public class HtmlFormPage extends BasePage {
         super(webDriver);
 
         try {
-            if (!getTitle().equals(PropertyReader.getEnvironment("html_form_title"))) {
+            if (!GetTitle().equals(PropertyReader.getEnvironment("html_form_title"))) {
                 throw new Exception("La pagina no es la esperada.");
             }
 
@@ -43,15 +43,15 @@ public class HtmlFormPage extends BasePage {
     //endregion
 
     public void InsertUserName(String userName) {
-        senKeys(userNameBy, userName);
+        SenKeys(userNameBy, userName);
     }
 
     public void InsertPassword(String password) {
-        senKeys(passwordBy, password);
+        SenKeys(passwordBy, password);
     }
 
     public void InsertComment(String comment) {
-        senKeys(textAreaCommentBy, comment);
+        SenKeys(textAreaCommentBy, comment);
     }
 
     public void ClickCheckButton(String option) {
@@ -84,12 +84,10 @@ public class HtmlFormPage extends BasePage {
     }
 
     public void ClickSubmit() {
-        click(btnSubmit);
+        Click(btnSubmit);
     }
 
     public WebElement GetFormResults() {
-        String title = webDriver.getTitle();
-        WebElement webElement = webDriver.findElement(formResultsBy);
         return webDriver.findElement(formResultsBy);
     }
 
@@ -102,7 +100,6 @@ public class HtmlFormPage extends BasePage {
         codes.add("_valuecheckboxes0");
         codes.add("_valuemultipleselect0");
         codes.add("_valuedropdown");
-        String atributoValor = "INVALID";
 
         for (String code : codes) {
             WebElement webElement = formResults.findElement(By.id(code));
@@ -112,16 +109,15 @@ public class HtmlFormPage extends BasePage {
             }
         }
 
-
         return invalid;
     }
 
     public String GetCurrentPageTitle() {
-        return getTitle();
+        return GetTitle();
     }
 
     public void ClosePage() {
-        quit();
+        Quit();
     }
 
 }

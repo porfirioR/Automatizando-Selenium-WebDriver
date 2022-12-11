@@ -11,7 +11,7 @@ public class Utils {
 
     }
 
-    public static WebDriver configureWebDriver() {
+    public static WebDriver ConfigureWebDriver() {
         WebDriver webDriver;
         WebDriverManager.chromedriver().setup();
         webDriver = new ChromeDriver();

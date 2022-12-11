@@ -31,9 +31,9 @@ public class TestHtmlForm {
 
     @BeforeEach
     void beforeEach() {
-        webDriver = Utils.configureWebDriver();
+        webDriver = Utils.ConfigureWebDriver();
         HomePage homePage = new HomePage(webDriver);
-        htmlFormPage = homePage.accessHtmlFormExample();
+        htmlFormPage = homePage.AccessHtmlFormExample();
     }
 
     @AfterEach

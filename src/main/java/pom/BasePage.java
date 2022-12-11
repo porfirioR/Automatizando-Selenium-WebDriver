@@ -9,24 +9,20 @@ public class BasePage {
         this.webDriver = webDriver;
     }
 
-    protected void sendKeys(By element, String text) {
-        webDriver.findElement(element).sendKeys(text);
-    }
-
-    protected void click(By element) {
+    protected void Click(By element) {
         webDriver.findElement(element).click();
     }
 
-    protected void senKeys(By element, String text) {
+    protected void SenKeys(By element, String text) {
         webDriver.findElement(element).clear();
         webDriver.findElement(element).sendKeys(text);
     }
 
-    protected String getTitle() {
+    protected String GetTitle() {
         return webDriver.getTitle();
     }
 
-    protected void quit() {
+    protected void Quit() {
         webDriver.quit();
     }
 }

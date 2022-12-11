@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class PropertyReader {
-    void PropertyReader() { }
 
     public static String getEnvironment(String key) {
         Properties properties = new Properties();
